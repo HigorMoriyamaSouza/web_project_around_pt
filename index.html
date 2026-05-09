@@ -28,21 +28,25 @@
             ></button>
             <p class="profile__description">Explorador</p>
           </div>
-          <button
-            aria-label="Adicionar cartão"
-            class="profile__add-button"
-            type="button"
-          ></button>
-        </section>
-        
-        <section class="cards page__section">
-          <!--RENDER THE CARDS HERE-->
-          <ul class="cards__list">
-            <!--CARDS GOES HERE-->
-          </ul>
-          <!--RENDER THE CARDS HERE-->
-        </section>
 
+
+          <!--
+           -- NEW CARD BUTTON
+          -->
+            <button
+              aria-label="Adicionar cartão"
+              class="profile__add-button"
+              type="button"
+            ></button>
+          <!--
+           -- NEW CARD BUTTON
+          -->
+
+
+        </section>
+        <section class="cards page__section">
+          <ul class="cards__list"></ul>
+        </section>
       </main>
       <footer class="footer page__section">
         <p class="footer__copyright">© 2025 Around The U.S.</p>
@@ -72,33 +76,41 @@
           </form>
         </div>
       </div>
-      <div class="popup" id="new-card-popup">
-        <div class="popup__content">
-          <button
-            aria-label="Fechar pop-up"
-            class="popup__close"
-            type="button"
-          ></button>
-          <h3 class="popup__title">Novo local</h3>
-          <form class="popup__form" id="new-card-form">
-            <input
-              class="popup__input popup__input_type_card-name"
-              name="place-name"
-              placeholder="Título"
-              required
-              type="text"
-            />
-            <input
-              class="popup__input popup__input_type_url"
-              name="link"
-              placeholder="Link de Imagem"
-              required
-              type="url"
-            />
-            <button class="button popup__button" type="submit">Criar</button>
-          </form>
+
+      <!--
+        -- NEW CARD POPUP
+      -->
+        <div class="popup" id="new-card-popup">
+          <div class="popup__content">
+            <button
+              aria-label="Fechar pop-up"
+              class="popup__close"
+              type="button"
+            ></button>
+            <h3 class="popup__title">Novo local</h3>
+            <form class="popup__form" id="new-card-form">
+              <input
+                class="popup__input popup__input_type_card-name"
+                name="place-name"
+                placeholder="Título"
+                required
+                type="text"
+              />
+              <input
+                class="popup__input popup__input_type_url"
+                name="link"
+                placeholder="Link de Imagem"
+                required
+                type="url"
+              />
+              <button class="button popup__button" type="submit">Criar</button>
+            </form>
+          </div>
         </div>
-      </div>
+      <!--
+        -- NEW CARD POPUP
+      -->
+
       <div class="popup" id="image-popup">
         <div class="popup__content popup__content_content_image">
           <button
@@ -111,8 +123,6 @@
         </div>
       </div>
     </div>
-
-    <!--CARDS-TEMPLATE-->
     <template id="cards-template">
       <li class="card">
         <img
@@ -135,8 +145,6 @@
         </div>
       </li>
     </template>
-
-
     <script src="./scripts/index.js"></script>
   </body>
 </html>
