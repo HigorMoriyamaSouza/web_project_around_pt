@@ -22,6 +22,18 @@ const cardContainer = document.querySelector(".cards__list");
 const newCardButton = document.querySelector(".profile__add-button");
 const newCardPopup = document.querySelector("#new-card-popup");
 const newCardPopupCloseButton = newCardPopup.querySelector(".popup__close");
+const imagePopup = document.querySelector("#image-popup");
+const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
+const imagePopupImgElement = imagePopup.querySelector(".popup__image");
+const imagePopupCaption = imagePopup.querySelector(".popup__caption");
+
+/*
+ * HANDLES MODAL OPEN/CLOSE 
+*/
+const openModal = (modal) => modal.classList.add("popup_is-opened");
+const closeModal = (modal) => modal.classList.remove("popup_is-opened");
+
+imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 /*
  * CARDS
@@ -44,6 +56,13 @@ function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.
     cardLikeButton.addEventListener("click", (event) => {
         event.target.classList.toggle("card__like-button_is-active");
     });
+
+    cardImage.addEventListener("click", () => {
+        imagePopupImgElement.alt, imagePopupCaption.textContent = name;
+        imagePopupImgElement.src = link;
+
+        openModal(imagePopup);
+    });
     
     return cardElement;
 }
@@ -58,9 +77,6 @@ initialCards.forEach(card => renderCard(card.name, card.link, cardContainer));
 /*
  * MODAL - EDIT PROFILE 
 */
-const openModal = (modal) => modal.classList.add("popup_is-opened");
-const closeModal = (modal) => modal.classList.remove("popup_is-opened");
-
 const fillProfileForm = () => {
     editPopupFormNameInput.value = profileTitle.textContent;
     editPopupFormDescriptionInput.value = profileDescription.textContent;
