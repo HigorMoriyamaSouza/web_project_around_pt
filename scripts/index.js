@@ -17,9 +17,8 @@ const editPopupCloseButton = editPopup.querySelector(".popup__close");
 const editPopupForm = editPopup.querySelector("#edit-profile-form");
 const editPopupFormNameInput = editPopupForm.querySelector(".popup__input_type_name");
 const editPopupFormDescriptionInput = editPopupForm.querySelector(".popup__input_type_description");
-const cardsTemplate = document.querySelector("#cards-template");
+const cardsTemplate = document.querySelector("#cards-template").content.querySelector(".card");
 const cardContainer = document.querySelector(".cards__list");
-
 const newCardButton = document.querySelector(".profile__add-button");
 const newCardPopup = document.querySelector("#new-card-popup");
 const newCardPopupCloseButton = newCardPopup.querySelector(".popup__close");
@@ -28,12 +27,23 @@ const newCardPopupCloseButton = newCardPopup.querySelector(".popup__close");
  * CARDS
 */
 function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.jpg") {
-    const cardElement = cardsTemplate.content.cloneNode(true);
+    const cardElement = cardsTemplate.cloneNode(true);
     const cardTitle = cardElement.querySelector(".card__title");
     const cardImage = cardElement.querySelector(".card__image");
+    
 
     cardImage.src = link;
     cardImage.alt, cardTitle.textContent = name;
+
+    const cardDeleteButton = cardElement.querySelector(".card__delete-button");
+    cardDeleteButton.addEventListener("click", () => {
+        cardElement.remove();
+    });
+
+    const cardLikeButton = cardElement.querySelector(".card__like-button");
+    cardLikeButton.addEventListener("click", (event) => {
+        event.target.classList.toggle("card__like-button_is-active");
+    });
     
     return cardElement;
 }
