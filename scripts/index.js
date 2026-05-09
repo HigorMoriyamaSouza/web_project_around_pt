@@ -16,6 +16,10 @@ const editPopupForm = editPopup.querySelector("#edit-profile-form");
 const editPopupFormNameInput = editPopupForm.querySelector(".popup__input_type_name");
 const editPopupFormDescriptionInput = editPopupForm.querySelector(".popup__input_type_description");
 
+//CARDS - TEMPLATE
+const cardsTemplate = document.querySelector("#cards-template");
+const cardContainer = document.querySelector(".cards__list");
+
 const openModal = (modal) => modal.classList.add("popup_is-opened");
 const closeModal = (modal) => modal.classList.remove("popup_is-opened");
 
@@ -45,3 +49,28 @@ function handleProfileFormSubmit(event) {
 editPopup.addEventListener("submit", handleProfileFormSubmit);
 
 // console.log(editPopupFormNameInput.textContent);
+
+
+//CARDS - TEMPLATE
+function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.jpg") {
+    const cardElement = cardsTemplate.content.cloneNode(true);
+    const cardTitle = cardElement.querySelector(".card__title");
+    const cardImage = cardElement.querySelector(".card__image");
+
+    cardImage.src = link;
+    cardImage.alt = name;
+    cardTitle.textContent = name;
+
+    
+    return cardElement;
+}
+
+function renderCard (name, link, cardContainer) {
+    const newCard = getCardElement(name, link);
+    console.log(newCard)
+    cardContainer.append(newCard);
+}
+
+initialCards.forEach(card => {
+    renderCard(card.name, card.link, cardContainer);
+})
