@@ -6,9 +6,6 @@ const initialCards = [
     { name: "Parque Nacional Vanoise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg" },
     { name: "Lago di Braies", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg" }
 ];
-
-//Every modal close button (".popup__close") does the same thing.
-
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -22,6 +19,8 @@ const cardContainer = document.querySelector(".cards__list");
 const newCardButton = document.querySelector(".profile__add-button");
 const newCardPopup = document.querySelector("#new-card-popup");
 const newCardPopupCloseButton = newCardPopup.querySelector(".popup__close");
+const newCardTitle = newCardPopup.querySelector(".popup__input_type_card-name");
+const newCardLink = newCardPopup.querySelector(".popup__input_type_url");
 const imagePopup = document.querySelector("#image-popup");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 const imagePopupImgElement = imagePopup.querySelector(".popup__image");
@@ -36,21 +35,19 @@ const closeModal = (modal) => modal.classList.remove("popup_is-opened");
 imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 /*
- * CARDS
+ * HANDLES CARDS CREATION
 */
 function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.jpg") {
     const cardElement = cardsTemplate.cloneNode(true);
     const cardTitle = cardElement.querySelector(".card__title");
     const cardImage = cardElement.querySelector(".card__image");
     
-
     cardImage.src = link;
-    cardImage.alt, cardTitle.textContent = name;
+    cardImage.alt = name;
+    cardTitle.textContent = name;
 
     const cardDeleteButton = cardElement.querySelector(".card__delete-button");
-    cardDeleteButton.addEventListener("click", () => {
-        cardElement.remove();
-    });
+    cardDeleteButton.addEventListener("click", () => cardElement.remove());
 
     const cardLikeButton = cardElement.querySelector(".card__like-button");
     cardLikeButton.addEventListener("click", (event) => {
@@ -58,7 +55,8 @@ function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.
     });
 
     cardImage.addEventListener("click", () => {
-        imagePopupImgElement.alt, imagePopupCaption.textContent = name;
+        imagePopupImgElement.alt = name;
+        imagePopupCaption.textContent = name;
         imagePopupImgElement.src = link;
 
         openModal(imagePopup);
@@ -67,12 +65,12 @@ function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.
     return cardElement;
 }
 
-const renderCard = (name, link, cardContainer) => {
-    const newCard = getCardElement(name, link);
-    cardContainer.append(newCard);
+const renderCard = (name, link, cardContainer, isNewCard) => {
+    const card = getCardElement(name, link);
+    (isNewCard) ? cardContainer.prepend(card) : cardContainer.append(card);  
 }
 
-initialCards.forEach(card => renderCard(card.name, card.link, cardContainer));
+initialCards.forEach(card => renderCard(card.name, card.link, cardContainer, isNewCard = false));
 
 /*
  * MODAL - EDIT PROFILE 
@@ -105,12 +103,7 @@ editPopup.addEventListener("submit", handleProfileFormSubmit);
 */
 function handleCardFormSubmit (event) {
     event.preventDefault();
-  
-    const newCardTitle = newCardPopup.querySelector(".popup__input_type_card-name").value;
-    const newCardLink = newCardPopup.querySelector(".popup__input_type_url").value;
-    
-    renderCard(newCardTitle, newCardLink, cardContainer);
-
+    renderCard(newCardTitle.value, newCardLink.value, cardContainer, isNewCard = true);
     closeModal(newCardPopup);
 }
 
