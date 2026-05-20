@@ -87,7 +87,7 @@ const handleOpenEditModal= () => {
 
 function handleProfileFormSubmit(event) {
     event.preventDefault();
-    
+
     profileTitle.textContent = editPopupFormNameInput.value;
     profileDescription.textContent = editPopupFormDescriptionInput.value;
     
@@ -110,3 +110,47 @@ function handleCardFormSubmit (event) {
 newCardButton.addEventListener("click", () => openModal(newCardPopup));
 newCardPopupCloseButton.addEventListener("click", () => closeModal(newCardPopup));
 newCardPopup.addEventListener("submit", handleCardFormSubmit);
+
+/*
+ * FORMs - ERROR HANDLING 
+*/
+// This code has been commented for future implementations of my own.
+// const toggleFormButtonState = (formInputs, formButton) => {
+//     const formHasInvalidField = Array.from(formInputs).every(input => input.validity.valid);
+//     formButton.disabled = !formHasInvalidField;
+// }; 
+
+function showInputError(popupInput, errorMessage) {
+   const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
+   popupInput.classList.add("popup__input_type_error");
+   errorElement.textContent = errorMessage;
+   errorElement.classList.add("popup__input-error_active");
+}
+
+function hideInputError(popupInput) {
+    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
+    popupInput.classList.remove("popup__input_type_error");
+    errorElement.textContent = "";
+    errorElement.classList.remove("popup__input-error_active")
+}
+
+function formInputErrorHandler(form) {
+    const formInputs = form.querySelectorAll(".popup__input");
+    const formButton = form.querySelector(".popup__button");
+
+    formInputs.forEach(input => {
+        input.addEventListener("input", () => {
+            if (!input.validity.valid) {
+                formButton.disabled = true;
+                showInputError(input, input.validationMessage);
+            } else {
+                formButton.disabled = false;
+                hideInputError(input);
+            }
+            // This code has been commented for future implementations of my own.
+            // toggleFormButtonState(formInputs, form.querySelector(".popup__button"));
+        });
+    });
+}
+
+formInputErrorHandler(editPopupForm);

@@ -80,6 +80,28 @@
   margin-bottom: 0;
 }
 
+/*
+ * FORMs - ERROR STYLES
+*/
+.popup__input_type_error {
+  border-bottom: 1px solid #FF0000;
+}
+
+.popup__input-error {
+  display: none;
+  color: #FF0000;
+  font-size: 17px;
+}
+
+.popup__input-error_active {
+  display: block;
+}
+
+.popup__button:disabled {
+  background-color: rgb(235, 235, 235);
+  color: #c2c2c2;
+  border: 1px solid #c2c2c2;
+}
 .popup__title {
   margin: 0;
   font-size: 24px;
