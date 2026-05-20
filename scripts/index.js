@@ -18,6 +18,7 @@ const cardsTemplate = document.querySelector("#cards-template").content.querySel
 const cardContainer = document.querySelector(".cards__list");
 const newCardButton = document.querySelector(".profile__add-button");
 const newCardPopup = document.querySelector("#new-card-popup");
+const newCardPopupForm = newCardPopup.querySelector("#new-card-form")
 const newCardPopupCloseButton = newCardPopup.querySelector(".popup__close");
 const newCardTitle = newCardPopup.querySelector(".popup__input_type_card-name");
 const newCardLink = newCardPopup.querySelector(".popup__input_type_url");
@@ -35,9 +36,52 @@ const closeModal = (modal) => modal.classList.remove("popup_is-opened");
 imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 /*
+ * FORMs - ERROR HANDLING 
+*/
+
+// This code has been commented for future implementations of my own.
+// const toggleFormButtonState = (formInputs, formButton) => {
+//     const formHasInvalidField = Array.from(formInputs).every(input => input.validity.valid);
+//     formButton.disabled = !formHasInvalidField;
+// }; 
+
+function showInputError(popupInput, errorMessage) {
+   const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
+   popupInput.classList.add("popup__input_type_error");
+   errorElement.textContent = errorMessage;
+   errorElement.classList.add("popup__input-error_active");
+}
+
+function hideInputError(popupInput) {
+    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
+    popupInput.classList.remove("popup__input_type_error");
+    errorElement.textContent = "";
+    errorElement.classList.remove("popup__input-error_active")
+}
+
+function formInputErrorHandler(form) {
+    const formInputs = form.querySelectorAll(".popup__input");
+    const formButton = form.querySelector(".popup__button");
+
+    formInputs.forEach(input => {
+        input.addEventListener("input", () => {
+            if (!input.validity.valid) {
+                formButton.disabled = true;
+                showInputError(input, input.validationMessage);
+            } else {
+                formButton.disabled = false;
+                hideInputError(input);
+            }
+            // This code has been commented for future implementations of my own.
+            // toggleFormButtonState(formInputs, form.querySelector(".popup__button"));
+        });
+    });
+}
+
+/*
  * HANDLES CARDS CREATION
 */
-function getCardElement (name = "Lugar sem nome.", link = "./images/placeholder.jpg") {
+function getCardElement (name, link) {
     const cardElement = cardsTemplate.cloneNode(true);
     const cardTitle = cardElement.querySelector(".card__title");
     const cardImage = cardElement.querySelector(".card__image");
@@ -81,6 +125,7 @@ const fillProfileForm = () => {
 }
 
 const handleOpenEditModal= () => {
+    formInputErrorHandler(editPopupForm);
     fillProfileForm();
     openModal(editPopup);
 }
@@ -107,50 +152,9 @@ function handleCardFormSubmit (event) {
     closeModal(newCardPopup);
 }
 
-newCardButton.addEventListener("click", () => openModal(newCardPopup));
+newCardButton.addEventListener("click", () => {
+    formInputErrorHandler(newCardPopupForm);
+    openModal(newCardPopup);
+});
 newCardPopupCloseButton.addEventListener("click", () => closeModal(newCardPopup));
 newCardPopup.addEventListener("submit", handleCardFormSubmit);
-
-/*
- * FORMs - ERROR HANDLING 
-*/
-// This code has been commented for future implementations of my own.
-// const toggleFormButtonState = (formInputs, formButton) => {
-//     const formHasInvalidField = Array.from(formInputs).every(input => input.validity.valid);
-//     formButton.disabled = !formHasInvalidField;
-// }; 
-
-function showInputError(popupInput, errorMessage) {
-   const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-   popupInput.classList.add("popup__input_type_error");
-   errorElement.textContent = errorMessage;
-   errorElement.classList.add("popup__input-error_active");
-}
-
-function hideInputError(popupInput) {
-    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-    popupInput.classList.remove("popup__input_type_error");
-    errorElement.textContent = "";
-    errorElement.classList.remove("popup__input-error_active")
-}
-
-function formInputErrorHandler(form) {
-    const formInputs = form.querySelectorAll(".popup__input");
-    const formButton = form.querySelector(".popup__button");
-
-    formInputs.forEach(input => {
-        input.addEventListener("input", () => {
-            if (!input.validity.valid) {
-                formButton.disabled = true;
-                showInputError(input, input.validationMessage);
-            } else {
-                formButton.disabled = false;
-                hideInputError(input);
-            }
-            // This code has been commented for future implementations of my own.
-            // toggleFormButtonState(formInputs, form.querySelector(".popup__button"));
-        });
-    });
-}
-
-formInputErrorHandler(editPopupForm);

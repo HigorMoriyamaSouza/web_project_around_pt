@@ -41,11 +41,6 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2025 Around The U.S.</p>
       </footer>
-
-
-      <!--
-        -- Edit Profile
-      -->
       <div class="popup" id="edit-popup">
         <div class="popup__content">
           <button
@@ -79,11 +74,10 @@
           </form>
         </div>
       </div>
+
       <!--
-        -- Edit Profile
+        -- NEW PLACE POPUP
       -->
-
-
       <div class="popup" id="new-card-popup">
         <div class="popup__content">
           <button
@@ -97,20 +91,28 @@
               class="popup__input popup__input_type_card-name"
               name="place-name"
               placeholder="Título"
+              minlength="2"
+              maxlength="30"
               required
               type="text"
             />
+            <span class="popup__input-error place-name-input-error"></span>
             <input
-              class="popup__input popup__input_type_url"
-              name="link"
-              placeholder="Link de Imagem"
-              required
-              type="url"
+            class="popup__input popup__input_type_url"
+            name="link"
+            placeholder="Link de Imagem"
+            required
+            type="url"
             />
+            <span class="popup__input-error link-input-error"></span>
             <button class="button popup__button" type="submit">Criar</button>
           </form>
         </div>
       </div>
+      <!--
+        -- NEW PLACE POPUP
+      -->
+
       <div class="popup" id="image-popup">
         <div class="popup__content popup__content_content_image">
           <button
