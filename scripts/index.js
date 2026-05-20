@@ -28,9 +28,22 @@ const imagePopupImgElement = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 
 /*
- * HANDLES MODAL OPEN/CLOSE 
+ * HANDLES POPUPS OPEN/CLOSE 
 */
-const openModal = (modal) => modal.classList.add("popup_is-opened");
+function modalCloseOnClick(modal) {
+    const modalOverlay = document.getElementById(`${modal.id}`);
+    modalOverlay.addEventListener("click", (event) => {
+        if (event.target === modalOverlay) {
+            closeModal(modal);
+        }
+    });
+}
+
+const openModal = (modal) => {
+    modal.classList.add("popup_is-opened");
+    modalCloseOnClick(modal);
+}
+
 const closeModal = (modal) => modal.classList.remove("popup_is-opened");
 
 imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
@@ -38,7 +51,6 @@ imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 /*
  * FORMs - ERROR HANDLING 
 */
-
 // This code has been commented for future implementations of my own.
 // const toggleFormButtonState = (formInputs, formButton) => {
 //     const formHasInvalidField = Array.from(formInputs).every(input => input.validity.valid);
