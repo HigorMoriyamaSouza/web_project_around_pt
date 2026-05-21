@@ -30,6 +30,14 @@ const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 /*
  * HANDLES POPUPS OPEN/CLOSE 
 */
+function modalCloseOnEsc(modal) {
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeModal(modal);
+        }
+    });
+}
+
 function modalCloseOnClick(modal) {
     const modalOverlay = document.getElementById(`${modal.id}`);
     modalOverlay.addEventListener("click", (event) => {
@@ -41,6 +49,7 @@ function modalCloseOnClick(modal) {
 
 const openModal = (modal) => {
     modal.classList.add("popup_is-opened");
+    modalCloseOnEsc(modal);
     modalCloseOnClick(modal);
 }
 
@@ -49,14 +58,8 @@ const closeModal = (modal) => modal.classList.remove("popup_is-opened");
 imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
 /*
- * FORMs - ERROR HANDLING 
+ * HANDLES FORM`s INPUTS ERRORS
 */
-// This code has been commented for future implementations of my own.
-// const toggleFormButtonState = (formInputs, formButton) => {
-//     const formHasInvalidField = Array.from(formInputs).every(input => input.validity.valid);
-//     formButton.disabled = !formHasInvalidField;
-// }; 
-
 function showInputError(popupInput, errorMessage) {
    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
    popupInput.classList.add("popup__input_type_error");
@@ -84,8 +87,6 @@ function formInputErrorHandler(form) {
                 formButton.disabled = false;
                 hideInputError(input);
             }
-            // This code has been commented for future implementations of my own.
-            // toggleFormButtonState(formInputs, form.querySelector(".popup__button"));
         });
     });
 }
