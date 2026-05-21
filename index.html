@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta name="author" content="Higor Moriyama Souza" />
+    <meta name="description" content="A responsive front-end web project built with HTML5, CSS3, and JavaScript." />
+    <meta name="keywords" content="Social Media, Photos, Posts" />
     <title>Around The U.S.</title>
+    <link rel="shortcut icon" href="./images/logo.svg" />
     <link href="./pages/index.css" rel="stylesheet" />
   </head>
   <body class="page">
@@ -26,7 +30,7 @@
               class="profile__edit-button"
               type="button"
             ></button>
-            <p class="profile__description">Explorador</p>
+            <p class="profile__description">Explorer</p>
           </div>
             <button
               aria-label="Adicionar cartão"
@@ -48,7 +52,7 @@
             class="popup__close"
             type="button"
           ></button>
-          <h3 class="popup__title">Editar perfil</h3>
+          <h3 class="popup__title">Edit profile</h3>
           <form class="popup__form" id="edit-profile-form">
             <input
               class="popup__input popup__input_type_name"
@@ -70,7 +74,7 @@
               required
             />
             <span class="popup__input-error description-input-error"></span>
-            <button class="button popup__button" type="submit">Salvar</button>
+            <button class="button popup__button" type="submit">Save</button>
           </form>
         </div>
       </div>
@@ -81,7 +85,7 @@
             class="popup__close"
             type="button"
           ></button>
-          <h3 class="popup__title">Novo local</h3>
+          <h3 class="popup__title">New place</h3>
           <form class="popup__form" id="new-card-form">
             <input
               class="popup__input popup__input_type_card-name"
@@ -94,14 +98,14 @@
             />
             <span class="popup__input-error place-name-input-error"></span>
             <input
-            class="popup__input popup__input_type_url"
-            name="link"
-            placeholder="Link de Imagem"
-            required
-            type="url"
+              class="popup__input popup__input_type_url"
+              name="link"
+              placeholder="Link de Imagem"
+              required
+              type="url"
             />
             <span class="popup__input-error link-input-error"></span>
-            <button class="button popup__button" type="submit">Criar</button>
+            <button class="button popup__button" type="submit">Create</button>
           </form>
         </div>
       </div>
