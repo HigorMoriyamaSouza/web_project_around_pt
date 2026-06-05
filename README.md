@@ -1,42 +1,86 @@
-# Around The U.S.
+# 🌎 Around The U.S.
 
-A responsive front-end web project built with HTML, CSS, and JavaScript.
+A responsive social-style web application built with Vanilla JavaScript, focused on DOM manipulation, component-based architecture, and interactive UI behavior.
 
-This project simulates a social-style profile page where users can edit profile information, add cards with images and titles, like cards, delete cards, and interact with modals.
+This project demonstrates core frontend engineering skills without relying on frameworks — emphasizing strong JavaScript fundamentals, clean structure, and responsive design principles.
 
-## Preview
+## 🚀 Features
 
-The project includes:
+✅ Edit profile information dynamically
 
-* Responsive layout
-* Profile editing modal
-* Add new card modal
-* Card like functionality
-* Card delete functionality
-* Close modal with overlay and ESC key support
-* Form validation
-* Clean component-based CSS structure
+✅ Add custom image cards
+
+✅ Like and unlike cards
+
+✅ Delete cards from the interface
+
+✅ Modal interactions:
+
+* Close with overlay click
+* Close with `ESC` key
+* Close with dedicated button
+
+✅ Responsive layout for multiple screen sizes
+
+✅ Form handling and validation
+
+✅ Organized CSS architecture using BEM
 
 ---
 
-## Technologies Used
+## 🧠 Technical Highlights
+
+This project was designed to reinforce important frontend concepts used in real-world applications:
+
+### DOM Manipulation
+
+* Dynamic rendering of cards
+* Interactive UI updates without page reload
+* Event-driven behavior
+
+### Component-Based Structure
+
+* Reusable UI sections
+* Modular CSS organization using BEM methodology
+
+### Modal Management
+
+* Overlay interaction handling
+* Keyboard accessibility with `Escape` support
+* Encapsulated open/close logic
+
+### Responsive Design
+
+* Mobile-first adjustments
+* Flexible layouts using CSS media queries
+
+### Functional Thinking
+
+* Separation of responsibilities
+* Reusable helper functions
+* State-driven UI interactions
+
+---
+
+## 🛠️ Tech Stack
 
 * HTML5
 * CSS3
-* JavaScript (Vanilla JS)
+* JavaScript (ES6+)
 * BEM Methodology
-* Responsive Design
 * Normalize.css
+
+No frameworks or libraries — pure JavaScript.
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```text
 web_project_around_pt/
 │
 ├── blocks/              # Component CSS files
-├── images/              # Project images and icons
+├── images/              # Images and icons
 ├── pages/               # Main page styles
 ├── scripts/             # JavaScript logic
 ├── vendor/              # External styles/fonts
@@ -46,74 +90,56 @@ web_project_around_pt/
 
 ---
 
-## Features
+## ▶️ How to Run
 
-### Profile Editing
-
-Users can:
-
-* Open the edit modal
-* Update profile name and description
-* Save changes dynamically to the page
-
-### Cards System
-
-Users can:
-
-* Add new cards
-* Delete cards
-* Like/unlike cards
-
-### Modal Interactions
-
-The modals can be closed by:
-
-* Clicking the close button
-* Clicking outside the modal
-* Pressing the `ESC` key
-
----
-
-## Responsive Design
-
-The application is responsive and adapts to different screen sizes including:
-
-* Desktop
-* Tablet
-* Mobile devices
-
----
-
-## How to Run the Project
-
-1. Clone the repository:
+### Clone the repository
 
 ```bash
 git clone <repository-url>
 ```
 
-2. Open the project folder:
+### Open the project folder
 
 ```bash
 cd web_project_around_pt
 ```
 
-3. Open `index.html` in your browser.
+### Run the project
+
+Open `index.html` in your browser.
+
+No build step required.
 
 ---
 
-## Future Improvements
+## 🎯 What This Project Demonstrates
 
-Possible future enhancements:
+* Ability to build interactive web interfaces from scratch
+* Strong understanding of JavaScript fundamentals
+* Experience with DOM manipulation and event handling
+* Responsive frontend development skills
+* Writing modular and maintainable code
 
-* Store cards in Local Storage
-* Connect to a backend API
-* Add authentication
-* Improve accessibility
+---
+
+## 📌 Future Improvements
+
+* Persist cards using LocalStorage
+* Add backend/API integration
+* Improve accessibility features
 * Add animations and transitions
+* Implement image preview modal
+* Refactor into a framework like React
 
 ---
 
-## Author
+## 👨‍💻 Author
 
-Developed by Higor Moriyama Souza.
+**Higor Souza**
+Software Engineer | Full Stack Developer
+
+---
+
+## 💡 Final Note
+
+This project focuses on mastering the fundamentals behind modern frontend frameworks — demonstrating the ability to create scalable, interactive interfaces using only core web technologies.
