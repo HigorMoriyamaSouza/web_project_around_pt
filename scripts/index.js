@@ -53,7 +53,25 @@ const openModal = (modal) => {
     modalCloseOnClick(modal);
 }
 
-const closeModal = (modal) => modal.classList.remove("popup_is-opened");
+
+function resetModalFormOnClose(formElement) {
+    const formInputs = formElement.querySelectorAll(".popup__input");
+    const formButton = formElement.querySelector(".popup__button");
+
+    formElement.reset();
+    formInputs.forEach(input => hideInputError(input));
+    formButton.disabled = false;
+}
+
+const closeModal = (modal) => {
+    modal.classList.remove("popup_is-opened");
+
+    const formElement = modal.querySelector(".popup__form");
+
+    if (formElement) {
+        resetModalFormOnClose(formElement);
+    }
+}
 
 imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
 
