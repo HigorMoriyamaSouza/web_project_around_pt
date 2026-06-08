@@ -1,3 +1,7 @@
+/*
+ * HANDLES CARDS CREATION
+*/
+
 import { 
     imagePopup,
     imagePopupImgElement,

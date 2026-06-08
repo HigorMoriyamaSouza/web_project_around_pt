@@ -31,40 +31,7 @@ import {
     resetModalFormOnClose,
     closeModal
 } from "./utils.js";
-
-/*
- * HANDLES FORM`s INPUTS ERRORS
-*/
-function showInputError(popupInput, errorMessage) {
-   const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-   popupInput.classList.add("popup__input_type_error");
-   errorElement.textContent = errorMessage;
-   errorElement.classList.add("popup__input-error_active");
-}
-
-function hideInputError(popupInput) {
-    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-    popupInput.classList.remove("popup__input_type_error");
-    errorElement.textContent = "";
-    errorElement.classList.remove("popup__input-error_active")
-}
-
-function formInputErrorHandler(form) {
-    const formInputs = form.querySelectorAll(".popup__input");
-    const formButton = form.querySelector(".popup__button");
-
-    formInputs.forEach(input => {
-        input.addEventListener("input", () => {
-            if (!input.validity.valid) {
-                formButton.disabled = true;
-                showInputError(input, input.validationMessage);
-            } else {
-                formButton.disabled = false;
-                hideInputError(input);
-            }
-        });
-    });
-}
+import FormValidator from "./FormValidator.js";
 
 /*
  * HANDLES CARDS CREATION
@@ -89,7 +56,10 @@ const fillProfileForm = () => {
 }
 
 const handleOpenEditModal= () => {
-    formInputErrorHandler(editPopupForm);
+    /* HANDLES FORM`s INPUTS ERRORS*/
+    const formValidatorInstance = new FormValidator(editPopupForm);
+    formValidatorInstance.formInputErrorHandler();
+    
     fillProfileForm();
     openModal(editPopup);
 }
@@ -117,7 +87,10 @@ function handleCardFormSubmit (event) {
 }
 
 newCardButton.addEventListener("click", () => {
-    formInputErrorHandler(newCardPopupForm);
+    /* HANDLES FORM`s INPUTS ERRORS*/
+    const formValidatorInstance = new FormValidator(newCardPopupForm);
+    formValidatorInstance.formInputErrorHandler();
+
     openModal(newCardPopup);
 });
 newCardPopupCloseButton.addEventListener("click", () => closeModal(newCardPopup));

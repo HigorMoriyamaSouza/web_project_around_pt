@@ -1,3 +1,5 @@
+import FormValidator from "./FormValidator.js";
+
 export const initialCards = [
     { name: "Vale de Yosemite", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg" },
     { name: "Lago Louise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg" },
@@ -55,11 +57,12 @@ export function modalCloseOnClick(modal) {
 
 
 export function resetModalFormOnClose(formElement) {
+    const formValidatorInstance = new FormValidator(formElement);
     const formInputs = formElement.querySelectorAll(".popup__input");
     const formButton = formElement.querySelector(".popup__button");
 
     formElement.reset();
-    formInputs.forEach(input => hideInputError(input));
+    formInputs.forEach(input => formValidatorInstance.resetFormFieldsValidation(input));
     formButton.disabled = false;
 }
 
