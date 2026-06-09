@@ -8,6 +8,15 @@ export const initialCards = [
     { name: "Parque Nacional Vanoise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg" },
     { name: "Lago di Braies", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg" }
 ];
+export const formValidatorSetup = {
+    fieldsClass: ".popup__input", 
+    formButtonClass: ".popup__button",
+    errorClasses: {
+        inputError: "-input-error", 
+        typeError: "popup__input_type_error", 
+        errorActive: "popup__input-error_active"
+    }
+};
 export const profileEditButton = document.querySelector(".profile__edit-button");
 export const profileTitle = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(".profile__description");
@@ -28,7 +37,8 @@ export const imagePopup = document.querySelector("#image-popup");
 export const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 export const imagePopupImgElement = imagePopup.querySelector(".popup__image");
 export const imagePopupCaption = imagePopup.querySelector(".popup__caption");
-
+export const editProfileFormValidatorInstance = new FormValidator(formValidatorSetup, editPopupForm);
+export const newCardFormValidatorInstance = new FormValidator(formValidatorSetup, newCardPopupForm);
 /*
  * HANDLES POPUPS OPEN/CLOSE 
 */
@@ -55,24 +65,14 @@ export function modalCloseOnClick(modal) {
     modalCloseOnClick(modal);
 }
 
-
-export function resetModalFormOnClose(formElement) {
-    const formValidatorInstance = new FormValidator(formElement);
-    const formInputs = formElement.querySelectorAll(".popup__input");
-    const formButton = formElement.querySelector(".popup__button");
-
-    formElement.reset();
-    formInputs.forEach(input => formValidatorInstance.resetFormFieldsValidation(input));
-    formButton.disabled = false;
-}
-
 export const closeModal = (modal) => {
     modal.classList.remove("popup_is-opened");
 
     const formElement = modal.querySelector(".popup__form");
 
     if (formElement) {
-        resetModalFormOnClose(formElement);
+        editProfileFormValidatorInstance.resetFormValidation();
+        newCardFormValidatorInstance.resetFormValidation();
     }
 }
 

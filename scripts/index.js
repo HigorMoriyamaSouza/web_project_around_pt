@@ -2,6 +2,7 @@ import Card from "./Card.js";
 import {
     /*--CONSTANTS--*/
     initialCards,
+    formValidatorSetup,
     profileEditButton,
     profileTitle,
     profileDescription,
@@ -22,13 +23,14 @@ import {
     imagePopupCloseButton,
     imagePopupImgElement,
     imagePopupCaption,
+    editProfileFormValidatorInstance,
+    newCardFormValidatorInstance,
 
     /*--FUNCTIONS--*/
     /** HANDLES POPUPS OPEN/CLOSE  **/
     modalCloseOnEsc,
     modalCloseOnClick,
     openModal,
-    resetModalFormOnClose,
     closeModal
 } from "./utils.js";
 import FormValidator from "./FormValidator.js";
@@ -55,16 +57,14 @@ const fillProfileForm = () => {
     editPopupFormDescriptionInput.value = profileDescription.textContent;
 }
 
-const handleOpenEditModal= () => {
+const handleOpenEditModal = () => {
     /* HANDLES FORM`s INPUTS ERRORS*/
-    const formValidatorInstance = new FormValidator(editPopupForm);
-    formValidatorInstance.formInputErrorHandler();
-    
+    editProfileFormValidatorInstance.formInputErrorHandler();
     fillProfileForm();
     openModal(editPopup);
 }
 
-function handleProfileFormSubmit(event) {
+const handleProfileFormSubmit = (event) => {
     event.preventDefault();
 
     profileTitle.textContent = editPopupFormNameInput.value;
@@ -72,7 +72,6 @@ function handleProfileFormSubmit(event) {
     
     closeModal(editPopup);
 }
-
 profileEditButton.addEventListener("click", () => handleOpenEditModal(editPopup));
 editPopupCloseButton.addEventListener("click", () => closeModal(editPopup));
 editPopup.addEventListener("submit", handleProfileFormSubmit);
@@ -80,7 +79,7 @@ editPopup.addEventListener("submit", handleProfileFormSubmit);
 /*
  * MODAL - ADD NEW CARD 
 */
-function handleCardFormSubmit (event) {
+const handleCardFormSubmit = (event) => {
     event.preventDefault();
     renderCard({title: newCardTitle.value, link: newCardLink.value}, cardContainer, true);
     closeModal(newCardPopup);
@@ -88,9 +87,7 @@ function handleCardFormSubmit (event) {
 
 newCardButton.addEventListener("click", () => {
     /* HANDLES FORM`s INPUTS ERRORS*/
-    const formValidatorInstance = new FormValidator(newCardPopupForm);
-    formValidatorInstance.formInputErrorHandler();
-
+    newCardFormValidatorInstance.formInputErrorHandler();
     openModal(newCardPopup);
 });
 newCardPopupCloseButton.addEventListener("click", () => closeModal(newCardPopup));
