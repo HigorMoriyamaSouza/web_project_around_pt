@@ -3,29 +3,35 @@
 */
 
 class FormValidator {
-    constructor(form) {
-        this._form = form
+    constructor(settings, form) {
+        this._settings = settings;
+        this._form = form;
+  
+        this._formInputs = form.querySelectorAll(this._settings.fieldsClass);
+        this._formButton = form.querySelector(this._settings.formButtonClass);
     }
 
     _showInputError(popupInput, errorMessage) {
-    const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-    popupInput.classList.add("popup__input_type_error");
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add("popup__input-error_active");
+        const errorElement = document.querySelector(`.${popupInput.name}${this._settings.errorClasses.inputError}`);
+        popupInput.classList.add(this._settings.errorClasses.typeError);
+        errorElement.textContent = errorMessage;
+        errorElement.classList.add(this._settings.errorClasses.errorActive);
     }
 
     _hideInputError(popupInput) {
-        const errorElement = document.querySelector(`.${popupInput.name}-input-error`);
-        popupInput.classList.remove("popup__input_type_error");
+        const errorElement = document.querySelector(`.${popupInput.name}${this._settings.errorClasses.inputError}`);
+        popupInput.classList.remove(this._settings.errorClasses.typeError);
         errorElement.textContent = "";
-        errorElement.classList.remove("popup__input-error_active")
+        errorElement.classList.remove(this._settings.errorClasses.errorActive);
     }
 
-    resetFormFieldsValidation(input) {
-        this._hideInputError(input);
+    resetFormValidation() {
+        this._form.reset();
+        this._formInputs.forEach(input => this._hideInputError(input));
+        this._formButton.disabled = false;
     }
 
-    setEventListener(formInputs, formButton) {
+    _setEventListener(formInputs, formButton) {
         formInputs.forEach(input => {
             input.addEventListener("input", () => {
                 if (!input.validity.valid) {
@@ -40,10 +46,7 @@ class FormValidator {
     }
 
     formInputErrorHandler() {
-        const formInputs = this._form.querySelectorAll(".popup__input");
-        const formButton = this._form.querySelector(".popup__button");
-
-        this.setEventListener(formInputs, formButton);
+        this._setEventListener(this._formInputs, this._formButton);
     }
 }
 

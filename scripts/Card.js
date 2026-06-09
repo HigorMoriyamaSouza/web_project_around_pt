@@ -45,7 +45,6 @@ class Card {
     }
 
     generateCard() {
-        console.log("Method Called!");
         const cardElement = this._getTemplate();
         const cardTitle = cardElement.querySelector(".card__title");
         const cardImage = cardElement.querySelector(".card__image");
