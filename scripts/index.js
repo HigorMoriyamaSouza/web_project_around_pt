@@ -1,4 +1,5 @@
 import Card from "./Card.js";
+import Section from "../components/Section.js";
 import {
     /*--CONSTANTS--*/
     initialCards,
@@ -33,21 +34,31 @@ import {
     openModal,
     closeModal
 } from "./utils.js";
-import FormValidator from "./FormValidator.js";
 
 /*
  * HANDLES CARDS CREATION
 */
-function renderCard(cardData, cardContainer, isNewCard) {
-    const cardInstance = new Card(cardData, "#cards-template");
-    const cardElement = cardInstance.generateCard();
+const existentCardList = new Section({
+    items: initialCards,
+    renderer:  (card) => {
+        const cardInstance = new Card ({ title: card.name, link: card.link }, "#cards-template");
+        const cardElement = cardInstance.generateCard();
 
-    (isNewCard) 
-        ? cardContainer.prepend(cardElement) 
-        : cardContainer.append(cardElement);  
-}
+        existentCardList.addItem(cardElement, false);
+    }
+}, ".cards__list");
+existentCardList.renderer();
 
-initialCards.forEach(card => renderCard({title: card.name, link: card.link}, cardContainer, false));
+// OLD WAY TO RENDER CARDS
+// function renderCard(cardData, cardContainer, isNewCard) {
+//     const cardInstance = new Card(cardData, "#cards-template");
+//     const cardElement = cardInstance.generateCard();
+
+//     (isNewCard) 
+//         ? cardContainer.prepend(cardElement) 
+//         : cardContainer.append(cardElement);  
+// }
+// initialCards.forEach(card => renderCard({title: card.name, link: card.link}, cardContainer, false));
 
 /*
  * MODAL - EDIT PROFILE 
@@ -81,7 +92,22 @@ editPopup.addEventListener("submit", handleProfileFormSubmit);
 */
 const handleCardFormSubmit = (event) => {
     event.preventDefault();
-    renderCard({title: newCardTitle.value, link: newCardLink.value}, cardContainer, true);
+
+    // OLD WAY TO RENDER NEW CARDS
+    // renderCard({title: newCardTitle.value, link: newCardLink.value}, cardContainer, true);
+    
+    const newCard = new Section({
+        items: [{ name: newCardTitle.value, link: newCardLink.value }],
+        renderer: (card) => {
+            const cardInstance = new Card({ title: card.name, link: card.link }, "#cards-template");
+            const cardElement = cardInstance.generateCard();
+
+            newCard.addItem(cardElement, true);
+        }
+    }, ".cards__list");
+
+    newCard.renderer();
+
     closeModal(newCardPopup);
 }
 
