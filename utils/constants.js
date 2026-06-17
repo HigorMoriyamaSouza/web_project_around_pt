@@ -1,5 +1,11 @@
-import FormValidator from "./FormValidator.js";
-
+/*
+ * STORES APPLICATION'S CONSTANTS
+ * USED BY: 
+    ../scripts/index.js  
+    ../components/Card.js
+    ../components/PopupWithForms.js
+    ../components/UserInfo.js
+*/
 export const initialCards = [
     { name: "Vale de Yosemite", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg" },
     { name: "Lago Louise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg" },
@@ -17,6 +23,16 @@ export const formValidatorSetup = {
         errorActive: "popup__input-error_active"
     }
 };
+export const cardClassSetup = {
+    "cardTemplate" : "#cards-template",
+    "templateCardElement" : ".card",
+    "cardDeleteButton" : ".card__delete-button",
+    "cardLikeButton" : ".card__like-button",
+    "cardLikeButtonActive" : "card__like-button_is-active",
+    "cardTitle" : ".card__title",
+    "cardImg" : ".card__image",
+    "cardImagePopup" : "#image-popup"
+}
 export const profileEditButton = document.querySelector(".profile__edit-button");
 export const profileTitle = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(".profile__description");
@@ -37,46 +53,3 @@ export const imagePopup = document.querySelector("#image-popup");
 export const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 export const imagePopupImgElement = imagePopup.querySelector(".popup__image");
 export const imagePopupCaption = imagePopup.querySelector(".popup__caption");
-export const editProfileFormValidatorInstance = new FormValidator(formValidatorSetup, editPopupForm);
-export const newCardFormValidatorInstance = new FormValidator(formValidatorSetup, newCardPopupForm);
-/*
- * HANDLES POPUPS OPEN/CLOSE 
-*/
-export function modalCloseOnEsc(modal) {
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            closeModal(modal);
-        }
-    });
-}
-
-export function modalCloseOnClick(modal) {
-    const modalOverlay = document.getElementById(`${modal.id}`);
-    modalOverlay.addEventListener("click", (event) => {
-        if (event.target === modalOverlay) {
-            closeModal(modal);
-        }
-    });
-}
-
- export const openModal = (modal) => {
-    modal.classList.add("popup_is-opened");
-    modalCloseOnEsc(modal);
-    modalCloseOnClick(modal);
-}
-
-export const closeModal = (modal) => {
-    modal.classList.remove("popup_is-opened");
-
-    const formElement = modal.querySelector(".popup__form");
-
-    if (formElement) {
-        editProfileFormValidatorInstance.resetFormValidation();
-        newCardFormValidatorInstance.resetFormValidation();
-    }
-}
-
-/*
- * MODAL - IMAGE POPUP 
-*/
-imagePopupCloseButton.addEventListener("click", () => closeModal(imagePopup));
