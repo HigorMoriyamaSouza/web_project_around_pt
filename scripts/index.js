@@ -1,105 +1,60 @@
-import Card from "./Card.js";
+import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 import {
-    /*--CONSTANTS--*/
     initialCards,
-    formValidatorSetup,
     profileEditButton,
-    profileTitle,
-    profileDescription,
-    editPopup,
-    editPopupCloseButton,
-    editPopupForm,
-    editPopupFormNameInput,
-    editPopupFormDescriptionInput,
-    cardsTemplate,
-    cardContainer,
     newCardButton,
-    newCardPopup,
-    newCardPopupForm,
-    newCardPopupCloseButton,
     newCardTitle,
     newCardLink,
-    imagePopup,
-    imagePopupCloseButton,
-    imagePopupImgElement,
-    imagePopupCaption,
-    editProfileFormValidatorInstance,
-    newCardFormValidatorInstance,
-
-    /*--FUNCTIONS--*/
-    /** HANDLES POPUPS OPEN/CLOSE  **/
-    modalCloseOnEsc,
-    modalCloseOnClick,
-    openModal,
-    closeModal
-} from "./utils.js";
+    cardClassSetup
+} from "../utils/constants.js";
 
 /*
- * HANDLES CARDS CREATION
+ * HANDLES EXISTENT CARDS CREATION
 */
 const existentCardList = new Section({
     items: initialCards,
     renderer:  (card) => {
-        const cardInstance = new Card ({ title: card.name, link: card.link }, "#cards-template");
+        const cardInstance = new Card ({ title: card.name, link: card.link }, cardClassSetup);
         const cardElement = cardInstance.generateCard();
 
         existentCardList.addItem(cardElement, false);
     }
 }, ".cards__list");
+
 existentCardList.renderer();
 
-// OLD WAY TO RENDER CARDS
-// function renderCard(cardData, cardContainer, isNewCard) {
-//     const cardInstance = new Card(cardData, "#cards-template");
-//     const cardElement = cardInstance.generateCard();
+/*
+ * HANDLES PROFILE EDITION 
+*/
+const userInfo = new UserInfo({
+    userName_elementSelector: ".popup__input_type_name", 
+    userTitle_elementSelector: ".popup__input_type_description"
+});
 
-//     (isNewCard) 
-//         ? cardContainer.prepend(cardElement) 
-//         : cardContainer.append(cardElement);  
-// }
-// initialCards.forEach(card => renderCard({title: card.name, link: card.link}, cardContainer, false));
+const profileEditFormComponent = new PopupWithForm("#edit-popup", (event) => {
+    event.preventDefault();
+    userInfo.setUserInfo();
+    profileEditFormComponent.close();
+});
+
+profileEditButton.addEventListener("click", () => {
+    userInfo.fillUserProfileForm();
+    profileEditFormComponent.open();
+});
 
 /*
- * MODAL - EDIT PROFILE 
+ * HANDLES NEW CARDS ADDITION
 */
-const fillProfileForm = () => {
-    editPopupFormNameInput.value = profileTitle.textContent;
-    editPopupFormDescriptionInput.value = profileDescription.textContent;
-}
-
-const handleOpenEditModal = () => {
-    /* HANDLES FORM`s INPUTS ERRORS*/
-    editProfileFormValidatorInstance.formInputErrorHandler();
-    fillProfileForm();
-    openModal(editPopup);
-}
-
-const handleProfileFormSubmit = (event) => {
+const newCardFormComponent = new PopupWithForm("#new-card-popup", (event) => {
     event.preventDefault();
 
-    profileTitle.textContent = editPopupFormNameInput.value;
-    profileDescription.textContent = editPopupFormDescriptionInput.value;
-    
-    closeModal(editPopup);
-}
-profileEditButton.addEventListener("click", () => handleOpenEditModal(editPopup));
-editPopupCloseButton.addEventListener("click", () => closeModal(editPopup));
-editPopup.addEventListener("submit", handleProfileFormSubmit);
-
-/*
- * MODAL - ADD NEW CARD 
-*/
-const handleCardFormSubmit = (event) => {
-    event.preventDefault();
-
-    // OLD WAY TO RENDER NEW CARDS
-    // renderCard({title: newCardTitle.value, link: newCardLink.value}, cardContainer, true);
-    
     const newCard = new Section({
         items: [{ name: newCardTitle.value, link: newCardLink.value }],
         renderer: (card) => {
-            const cardInstance = new Card({ title: card.name, link: card.link }, "#cards-template");
+            const cardInstance = new Card({ title: card.name, link: card.link }, cardClassSetup);
             const cardElement = cardInstance.generateCard();
 
             newCard.addItem(cardElement, true);
@@ -108,13 +63,7 @@ const handleCardFormSubmit = (event) => {
 
     newCard.renderer();
 
-    closeModal(newCardPopup);
-}
-
-newCardButton.addEventListener("click", () => {
-    /* HANDLES FORM`s INPUTS ERRORS*/
-    newCardFormValidatorInstance.formInputErrorHandler();
-    openModal(newCardPopup);
+    newCardFormComponent.close();
 });
-newCardPopupCloseButton.addEventListener("click", () => closeModal(newCardPopup));
-newCardPopup.addEventListener("submit", handleCardFormSubmit);
+
+newCardButton.addEventListener("click", () => newCardFormComponent.open());

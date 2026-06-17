@@ -1,26 +1,32 @@
+/*
+ * HANDLES POPUPS CREATION
+ * CHILDREN CLASSES: PopupWithForm.js / PopupWithImage.js
+*/
 export default class Popup {
     constructor(popupSelector){
         this._popupSelector = popupSelector;
+
+        this._popupElement = document.querySelector(popupSelector);
+        this._popupCloseButton = this._popupElement.querySelector(".popup__close");
+        this._popupOverlay = document.getElementById(`${this._popupElement.id}`);
     }
 
     _handleEscClose() {
         document.addEventListener("keydown", (event) => {
-            if (this._popupSelector.key === "Escape") {
-                closeModal(this._popupSelector);
+            if (event.key === "Escape") {
+                this.close();
             }
         });
     }
 
     setEventListeners() {
         //HANDLES NORMAL CLOSE
-        const popupCloseButton = this._popupSelector.querySelector(".popup__close");
-        popupCloseButton.addEventListener("click", () => this.close());
+        this._popupCloseButton.addEventListener("click", () => this.close());
         
         //HANDLES OVERLAY CLICK CLOSE
-        const modalOverlay = document.getElementById(`${this._popupSelector.id}`);
-        modalOverlay.addEventListener("click", (event) => {
-            if (event.target === modalOverlay) {
-                closeModal(this._popupSelector);
+        this._popupOverlay.addEventListener("click", (event) => {
+            if (event.target === this._popupOverlay) {
+                this.close();
             }
         });
 
@@ -29,18 +35,11 @@ export default class Popup {
     }
     
     open() {
-        this._popupSelector.classList.add("popup_is-opened");
+        this._popupElement.classList.add("popup_is-opened");
         this.setEventListeners();
     }
     
     close() {
-        this._popupSelector.classList.remove("popup_is-opened");
-    
-        // const formElement = this._popupSelector.querySelector(".popup__form");
-    
-        // if (formElement) {
-        //     editProfileFormValidatorInstance.resetFormValidation();
-        //     newCardFormValidatorInstance.resetFormValidation();
-        // }
+        this._popupElement.classList.remove("popup_is-opened");
     }
 }

@@ -1,31 +1,39 @@
-export default class PopupWithForm extends Popup {
-    constructor(popupSelector, submitForm) {
-        super(popupSelector);
-        this._submitForm = submitForm;
+/*
+ * HANDLES POPUPS WITH FORM CREATION
+ * FATHER CLASS: Popup.js
+*/
+import Popup from "./Popup.js";
+import FormValidator from "./FormValidator.js";
+import { formValidatorSetup } from "../utils/constants.js";
 
-        this._popupForm = super._popupSelector.querySelector(".popup__form");
+export default class PopupWithForm extends Popup {
+    constructor(popupSelector, submitFormMethod) {
+        super(popupSelector);
+        this._submitFormMethod = submitFormMethod;
+
+        this._popupForm = this._popupElement.querySelector(".popup__form");
+        this._formInputs = this._popupForm.querySelectorAll(".popup__input");
+
+        /* HANDLES FORM VALIDATIONS */
+        this._formValidator = new FormValidator(formValidatorSetup, this._popupForm);
     }
 
     _getInputValues() {
-       const formInputs = this._popupForm.querySelectorAll(".popup__input");
-
-       //Restante da logica
+        return this._formInputs;
     }
 
     setEventListeners() {
-        this._popupForm.addEventListener("submit", this._submitForm);
+        this._popupForm.addEventListener("submit", this._submitFormMethod);
 
-        /*
-         * HANDLES:
-         * - NORMAL CLOSE;
-         * - OVERLAY CLICK CLOSE;
-         * - ESC PRESS CLOSE.
-        */
+        /* HANDLES FORM VALIDATIONS */
+        this._formValidator.formInputErrorHandler();
+
+        /* HANDLES: NORMAL, OVERLAY CLICK AND ESC CLOSE. */
         super.setEventListeners();
     }
 
     close() {
-        this._popupForm.resetFormValidation(); //Criar Instancia de FormValid
         super.close();
+        this._formValidator.resetFormValidation(); 
     }
 }

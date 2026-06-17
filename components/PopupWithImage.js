@@ -1,17 +1,16 @@
-import { imagePopupImgElement, imagePopupCaption, imagePopupImgElement } from "../scripts/utils.js";
-
+/*
+ * HANDLES POPUPS WITH IMAGE CREATION
+ * FATHER CLASS: Popup.js
+*/
+import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
-    constructor(popupSelector, imgLink, imgTitle) {
+    constructor(popupSelector, handleCardClick) {
         super(popupSelector);
-        this._imgLink = imgLink;
-        this._imgTitle = imgTitle;
+        this._handleCardClick = handleCardClick;
     }
 
-    open() {
-        imagePopupImgElement.alt = this._title;
-        imagePopupCaption.textContent = this._title;
-        imagePopupImgElement.src = this._link;
-            
+    open() { 
+        this._handleCardClick(); 
         super.open();
     }
 }
