@@ -2,7 +2,7 @@
 * HANDLES FORM`s INPUTS ERRORS
 */
 
-class FormValidator {
+export default class FormValidator {
     constructor(settings, form) {
         this._settings = settings;
         this._form = form;
@@ -48,6 +48,4 @@ class FormValidator {
     formInputErrorHandler() {
         this._setEventListener(this._formInputs, this._formButton);
     }
-}
-
-export default FormValidator;
+} 
