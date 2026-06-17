@@ -1,30 +1,29 @@
-import Card from "../components/Card.js";
-import Section from "../components/Section.js";
-import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 import {
     initialCards,
     profileEditButton,
     newCardButton,
     newCardTitle,
     newCardLink,
-    cardClassSetup
+    cardClassSetup,
+    cardRender
 } from "../utils/constants.js";
 
 /*
  * HANDLES EXISTENT CARDS CREATION
 */
-const existentCardList = new Section({
-    items: initialCards,
-    renderer:  (card) => {
-        const cardInstance = new Card ({ title: card.name, link: card.link }, cardClassSetup);
-        const cardElement = cardInstance.generateCard();
+cardRender(initialCards, false);
 
-        existentCardList.addItem(cardElement, false);
-    }
-}, ".cards__list");
-
-existentCardList.renderer();
+/* 
+ * HANDLES NEW CARDS ADDITION 
+*/
+const newCardFormComponent = new PopupWithForm("#new-card-popup", (event) => {
+    event.preventDefault();
+    cardRender([{ name: newCardTitle.value, link: newCardLink.value }], true);
+    newCardFormComponent.close();
+});
+newCardButton.addEventListener("click", () => newCardFormComponent.open());
 
 /*
  * HANDLES PROFILE EDITION 
@@ -44,26 +43,3 @@ profileEditButton.addEventListener("click", () => {
     userInfo.fillUserProfileForm();
     profileEditFormComponent.open();
 });
-
-/*
- * HANDLES NEW CARDS ADDITION
-*/
-const newCardFormComponent = new PopupWithForm("#new-card-popup", (event) => {
-    event.preventDefault();
-
-    const newCard = new Section({
-        items: [{ name: newCardTitle.value, link: newCardLink.value }],
-        renderer: (card) => {
-            const cardInstance = new Card({ title: card.name, link: card.link }, cardClassSetup);
-            const cardElement = cardInstance.generateCard();
-
-            newCard.addItem(cardElement, true);
-        }
-    }, ".cards__list");
-
-    newCard.renderer();
-
-    newCardFormComponent.close();
-});
-
-newCardButton.addEventListener("click", () => newCardFormComponent.open());
