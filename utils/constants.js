@@ -6,6 +6,8 @@
     ../components/PopupWithForms.js
     ../components/UserInfo.js
 */
+import Card from "../components/Card.js";
+import Section from "../components/Section.js";
 export const initialCards = [
     { name: "Vale de Yosemite", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg" },
     { name: "Lago Louise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg" },
@@ -53,3 +55,19 @@ export const imagePopup = document.querySelector("#image-popup");
 export const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 export const imagePopupImgElement = imagePopup.querySelector(".popup__image");
 export const imagePopupCaption = imagePopup.querySelector(".popup__caption");
+
+/*
+ * STORES CARD RENDERING FUNCTION AND SECTION/CARD INSTANCES.
+ */
+export const cardRender = (cards, isNewItem) => {
+    const cardList = new Section({
+        items: cards,
+        renderer:  (card) => {
+            const cardInstance = new Card ({ title: card.name, link: card.link }, cardClassSetup);
+            const cardElement = cardInstance.generateCard();
+    
+            cardList.addItem(cardElement, isNewItem);
+        }
+    }, ".cards__list");
+    cardList.renderer();
+}   
