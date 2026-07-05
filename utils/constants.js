@@ -8,6 +8,8 @@
 */
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import Api from "../components/Api.js";
+
 export const initialCards = [
     { name: "Vale de Yosemite", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg" },
     { name: "Lago Louise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg" },
@@ -38,6 +40,9 @@ export const cardClassSetup = {
 export const profileEditButton = document.querySelector(".profile__edit-button");
 export const profileTitle = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(".profile__description");
+export const profileImageContainer = document.querySelector(".profile__image-container");
+export const profileImage = document.querySelector(".profile__image");
+// export const editAvatarPopupFormAvatarUrlInput = document.querySelector(".popup__input-avatar");
 export const editPopup = document.querySelector("#edit-popup");
 export const editPopupCloseButton = editPopup.querySelector(".popup__close");
 export const editPopupForm = editPopup.querySelector("#edit-profile-form");
@@ -71,3 +76,14 @@ export const cardRender = (cards, isNewItem) => {
     }, ".cards__list");
     cardList.renderer();
 }   
+
+/*
+ * STORES API INSTANCE AND PASSES IT'S CONFIGURATIONS. 
+ */
+export const api = new Api({
+  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
+  headers: {
+    authorization: "b7d7e2ae-30db-4953-94d1-6a394992fa77",
+    "Content-Type": "application/json"
+  }
+});

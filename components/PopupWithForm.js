@@ -18,9 +18,13 @@ export default class PopupWithForm extends Popup {
         this._formValidator = new FormValidator(formValidatorSetup, this._popupForm);
     }
 
-    _getInputValues() {
-        return this._formInputs;
-    }
+    /*
+     * METHOD SUSPENDED FOR CORRECTIONS
+     */
+    // getInputValues() {
+    //     const inputValues = this._formInputs.forEach((input) => input.value);
+    //     return inputValues;
+    // }
 
     setEventListeners() {
         this._popupForm.addEventListener("submit", this._submitFormMethod);

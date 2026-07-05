@@ -2,12 +2,13 @@ import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import {
     initialCards,
+    profileImageContainer,
     profileEditButton,
     newCardButton,
     newCardTitle,
     newCardLink,
     cardClassSetup,
-    cardRender
+    cardRender,
 } from "../utils/constants.js";
 
 /*
@@ -43,3 +44,12 @@ profileEditButton.addEventListener("click", () => {
     userInfo.fillUserProfileForm();
     profileEditFormComponent.open();
 });
+
+const profileEditAvatarFormComponent = new PopupWithForm("#edit-avatar-popup", (event) => {
+    event.preventDefault();
+    userInfo.setUserAvatar();
+    profileEditAvatarFormComponent.close();
+});
+profileImageContainer.addEventListener("click", () => profileEditAvatarFormComponent.open());
+
+userInfo.fillUserPage();
