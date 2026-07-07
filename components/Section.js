@@ -1,6 +1,6 @@
 /*
  * HANDLES ELEMENTS RENDERING ON PAGE
-*/
+ */
 export default class Section {
     constructor({ items, renderer }, displayContainerSelector) {
         this._items = items;

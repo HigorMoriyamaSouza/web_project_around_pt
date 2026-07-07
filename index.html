@@ -20,17 +20,20 @@
           src="./images/logo.svg"
         />
       </header>
+
       <main class="content">
         <section class="profile page__section">
-          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__image-container">
+            <img class="profile__image" src="" alt="Avatar" />
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button
               aria-label="Editar perfil"
               class="profile__edit-button"
               type="button"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
             <button
               aria-label="Adicionar cartão"
@@ -42,9 +45,12 @@
           <ul class="cards__list"></ul>
         </section>
       </main>
+
       <footer class="footer page__section">
         <p class="footer__copyright">© 2026 Around The U.S.</p>
       </footer>
+
+      <!--EDIT PROFILE POPUP-->
       <div class="popup" id="edit-popup">
         <div class="popup__content">
           <button
@@ -78,6 +84,33 @@
           </form>
         </div>
       </div>
+      <!--EDIT PROFILE POPUP-->
+
+      <!--POPUP EDIT AVATAR-->
+      <div class="popup" id="edit-avatar-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Edit Avatar</h3>
+          <form class="popup__form" id="edit-avatar-form">
+            <input
+              class="popup__input popup__input-avatar popup__input_type_url"
+              name="link"
+              placeholder="Avatar link"
+              required
+              type="url"
+            />
+            <span class="popup__input-error link-input-error"></span>
+            <button class="button popup__button" type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+      <!--POPUP EDIT AVATAR-->
+
+      <!--NEW CARD POPUP-->
       <div class="popup" id="new-card-popup">
         <div class="popup__content">
           <button
@@ -109,6 +142,23 @@
           </form>
         </div>
       </div>
+      <!--NEW CARD POPUP-->
+
+      <!--DELETE CARD POPUP-->
+      <div class="popup" id="delete-card-popup">
+        <div class="popup__content popup__delete-card">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Are you sure?</h3>
+          <button class="button popup__button popup__button_type_confirm-delete" type="button">Yes</button>
+        </div>
+      </div>
+      <!--DELETE CARD POPUP-->
+
+      <!--CARD IMAGE POPUP-->
       <div class="popup" id="image-popup">
         <div class="popup__content popup__content_content_image">
           <button
@@ -120,7 +170,10 @@
           <p class="popup__caption"></p>
         </div>
       </div>
+      <!--CARD IMAGE POPUP-->
     </div>
+
+    <!--CARD TEMPLATE-->
     <template id="cards-template">
       <li class="card">
         <img
@@ -143,6 +196,8 @@
         </div>
       </li>
     </template>
+    <!--CARD TEMPLATE-->
+
     <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>

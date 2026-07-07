@@ -1,7 +1,7 @@
 /*
  * HANDLES POPUPS CREATION
  * CHILDREN CLASSES: PopupWithForm.js / PopupWithImage.js
-*/
+ */
 export default class Popup {
     constructor(popupSelector){
         this._popupSelector = popupSelector;
@@ -33,10 +33,9 @@ export default class Popup {
         //HANDLES ESC PRESS CLOSE
         this._handleEscClose();
     }
-    
+
     open() {
         this._popupElement.classList.add("popup_is-opened");
-        this.setEventListeners();
     }
     
     close() {
