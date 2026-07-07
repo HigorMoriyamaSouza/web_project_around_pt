@@ -1,6 +1,6 @@
 /*
  * HANDLES USER INFORMATIONS
-*/
+ */
 import { 
     profileTitle,
     profileDescription,
@@ -19,24 +19,14 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        //Do this here
-        // try{
-        //     const response = await api.getCards();
-        //     console.log("Transaction succeded: ", response);
-        // } catch (error) {
-        //     console.log("Error while loading cards: ", error);
-        // }
-
         return api.getUserInfo();
     }
 
     async setUserInfo() {
-        profileTitle.textContent = this._userNameInput.value;
-        profileDescription.textContent = this._userTitleInput.value;
-
         try{
             const response = await api.setUserInfo(this._userNameInput.value, this._userTitleInput.value);
-            console.log("Update succeded: ", response);
+            profileTitle.textContent = response.name;
+            profileDescription.textContent = response.about;
         } catch (error) {
             console.log("Error while updating user profile: ", error);
         }
@@ -46,7 +36,6 @@ export default class UserInfo {
         try{
             const response = await api.setUserAvatar(this._userAvatarInput.value);
             profileImage.src = response.avatar;
-            console.log("Update succeded: ", response);
         } catch (error) {
             console.log("Error while updating user avatar: ", error);
         }

@@ -1,32 +1,40 @@
+/*
+ * HANDLES API INTERACTIONS. 
+ */
 export default class Api {
     constructor(options) {
         this._options = options;
         this._headers = this._options.headers;
 
         /*
-        * STORES USER ENDPOINT.
-        */        
+         * STORES USER ENDPOINT.
+         */        
         this._userDataUrl = `${this._options.baseUrl}/users/me`;
 
         /*
-        * STORES CARDS ENDPOINT.
-        */        
+         * STORES CARDS ENDPOINT.
+         */        
        this._cardsDataUrl = `${this._options.baseUrl}/cards`;
     }
 
     /*
-     * TREAT PROMISES TO RETURN.
+     * HANDLE PROMISE RETURN AND RESPONSE LOG.
      */
     async _handleResponseReturn(response) {
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
-        return await response.json();
+
+        const jsonResponse = await response.json();
+
+        console.log("Transaction succeded: ", jsonResponse);
+        
+        return jsonResponse;
     }
 
     /*
      * HANDLES USER DATA.
-    */
+     */
     async getUserInfo() {
         const response = await fetch(this._userDataUrl, { headers: this._headers });
         return this._handleResponseReturn(response);
@@ -59,7 +67,7 @@ export default class Api {
     
     /*
      * HANDLES CARDS DATA.
-    */
+     */
     async getCards() {
         const response = await fetch(this._cardsDataUrl, { headers: this._headers });
         return this._handleResponseReturn(response);
@@ -104,12 +112,3 @@ export default class Api {
         return this._handleResponseReturn(response);
     }
 }
-
-
-// const api = new Api({
-//   baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
-//   headers: {
-//     authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-//     "Content-Type": "application/json"
-//   }
-// });

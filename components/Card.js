@@ -1,6 +1,6 @@
 /*
  * HANDLES CARDS CREATION
-*/
+ */
 import PopupWithImage from "./PopupWithImage.js";
 import { 
     imagePopupImgElement,
@@ -28,7 +28,7 @@ export default class Card {
 
     /*
      * HANDLES CARDS GENERATION LOGIC
-    */
+     */
     _getTemplate() {
         const cardElement = document
             .querySelector(this._settings.cardTemplate)
@@ -49,6 +49,9 @@ export default class Card {
     }
 
     _eventListenersHandler(cardElement, cardImage) {
+        this._popupImage.setEventListeners();
+        this._popupDeleteCard.setEventListeners();
+
         const cardDeleteButton = cardElement.querySelector(this._settings.cardDeleteButton);
         cardDeleteButton.addEventListener("click", () => {
             this._popupDeleteCard.open();
@@ -56,8 +59,7 @@ export default class Card {
             const cardConfirmDeletitionPopupButton = document.querySelector(".popup__button_type_confirm-delete");
             cardConfirmDeletitionPopupButton.addEventListener("click", async () => {
                 try{
-                    const response = await api.deleteCard(this._id);
-                    console.log("Transaction succeded: ", response);
+                    await api.deleteCard(this._id);
                 } catch (error) {
                     console.log("Error while deleting card: ", error);
                 }
@@ -70,24 +72,18 @@ export default class Card {
     
         const cardLikeButton = cardElement.querySelector(this._settings.cardLikeButton);
         cardLikeButton.addEventListener("click", async (event) => {
-            if (this._isLiked) {
-                try{
-                    const response = await api.dislikeCard(this._id);
-                    console.log("Transaction succeded: ", response);
-                } catch (error) {
-                    console.log("Error while dsliking card: ", error);
+            try{
+                if (this._isLiked){
+                    await api.dislikeCard(this._id);
+                    this._isLiked = false;
+                } else {
+                    await api.likeCard(this._id);
+                    this._isLiked = true;
                 }
-                this._isLiked = false;
-            } else {
-                try{
-                    const response = await api.likeCard(this._id);
-                    console.log("Transaction succeded: ", response);
-                } catch (error) {
-                    console.log("Error while dsliking card: ", error);
-                }
-                this._isLiked = true;
+            } catch (error) {
+                console.log("Error while interacting with the card: ", error);
             }
-
+            
             this._cardLikeOrDislikeVisualEffectAtLoad(cardLikeButton);
         });
 
@@ -109,26 +105,4 @@ export default class Card {
         
         return cardElement;
     }
-
-
-    /*
-     * HANDLES CARD DATA 
-    */
-    // async getCards() {
-    //     try{
-    //         const response = await api.getCards();
-    //         console.log("Transaction succeded: ", response);
-    //     } catch (error) {
-    //         console.log("Error while loading cards: ", error);
-    //     }
-    // }
-    
-    // async newCard() {
-    //     try{
-    //         const response = await api.newCard(this._title, this._link);
-    //         console.log("Transaction succeded: ", response);
-    //     } catch (error) {
-    //         console.log("Error while saving card: ", error);
-    //     }
-    // }
 }

@@ -1,6 +1,6 @@
 /*
-* HANDLES FORM`s INPUTS ERRORS
-*/
+ * HANDLES FORM`s INPUTS ERRORS
+ */
 export default class FormValidator {
     constructor(settings, form) {
         this._settings = settings;
