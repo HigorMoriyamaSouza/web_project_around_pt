@@ -1,16 +1,20 @@
 /*
  * HANDLES CARDS CREATION
-*/
+ */
 import PopupWithImage from "./PopupWithImage.js";
 import { 
     imagePopupImgElement,
-    imagePopupCaption
+    imagePopupCaption,
+    api
 } from "../utils/constants.js";
+import Popup from "./Popup.js";
 
 export default class Card {
     constructor(card, settings) {
-        this._title = card.title;
+        this._id = card._id || null;
+        this._title = card.name;
         this._link = card.link;
+        this._isLiked = card.isLiked;
         this._settings = settings;
 
         this._popupImage = new PopupWithImage(this._settings.cardImagePopup, () => {
@@ -18,8 +22,13 @@ export default class Card {
             imagePopupCaption.textContent = this._title;
             imagePopupImgElement.src = this._link;
         });
+
+        this._popupDeleteCard = new Popup("#delete-card-popup");
     }
 
+    /*
+     * HANDLES CARDS GENERATION LOGIC
+     */
     _getTemplate() {
         const cardElement = document
             .querySelector(this._settings.cardTemplate)
@@ -30,13 +39,52 @@ export default class Card {
         return cardElement;
     }
     
+    _cardLikeOrDislikeVisualEffectAtLoad(cardLikeButton) {
+        console.log(this._isLiked);
+        if (this._isLiked) {
+            cardLikeButton.classList.add(this._settings.cardLikeButtonActive);
+        } else {
+            cardLikeButton.classList.remove(this._settings.cardLikeButtonActive);
+        }
+    }
+
     _eventListenersHandler(cardElement, cardImage) {
+        this._popupImage.setEventListeners();
+        this._popupDeleteCard.setEventListeners();
+
         const cardDeleteButton = cardElement.querySelector(this._settings.cardDeleteButton);
-        cardDeleteButton.addEventListener("click", () => cardElement.remove());
+        cardDeleteButton.addEventListener("click", () => {
+            this._popupDeleteCard.open();
+
+            const cardConfirmDeletitionPopupButton = document.querySelector(".popup__button_type_confirm-delete");
+            cardConfirmDeletitionPopupButton.addEventListener("click", async () => {
+                try{
+                    await api.deleteCard(this._id);
+                } catch (error) {
+                    console.log("Error while deleting card: ", error);
+                }
+
+                cardElement.remove();
+                this._popupDeleteCard.close();
+            });
+        });
+        
     
         const cardLikeButton = cardElement.querySelector(this._settings.cardLikeButton);
-        cardLikeButton.addEventListener("click", (event) => {
-            event.target.classList.toggle(this._settings.cardLikeButtonActive);
+        cardLikeButton.addEventListener("click", async (event) => {
+            try{
+                if (this._isLiked){
+                    await api.dislikeCard(this._id);
+                    this._isLiked = false;
+                } else {
+                    await api.likeCard(this._id);
+                    this._isLiked = true;
+                }
+            } catch (error) {
+                console.log("Error while interacting with the card: ", error);
+            }
+            
+            this._cardLikeOrDislikeVisualEffectAtLoad(cardLikeButton);
         });
 
         cardImage.addEventListener("click", () => { this._popupImage.open() });
@@ -46,11 +94,13 @@ export default class Card {
         const cardElement = this._getTemplate();
         const cardTitle = cardElement.querySelector(this._settings.cardTitle);
         const cardImage = cardElement.querySelector(this._settings.cardImg);
+        const cardLikeButton = cardElement.querySelector(this._settings.cardLikeButton);
         
         cardImage.src = this._link;
         cardImage.alt = this._title;
         cardTitle.textContent = this._title;
 
+        this._cardLikeOrDislikeVisualEffectAtLoad(cardLikeButton);
         this._eventListenersHandler(cardElement, cardImage);
         
         return cardElement;
