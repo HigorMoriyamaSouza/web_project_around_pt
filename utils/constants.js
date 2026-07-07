@@ -10,14 +10,6 @@ import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import Api from "../components/Api.js";
 
-export const initialCards = [
-    { name: "Vale de Yosemite", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg" },
-    { name: "Lago Louise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg" },
-    { name: "Montanhas Carecas", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg" },
-    { name: "Latemar", link:  "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg" },
-    { name: "Parque Nacional Vanoise", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg" },
-    { name: "Lago di Braies", link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg" }
-];
 export const formValidatorSetup = {
     fieldsClass: ".popup__input", 
     formButtonClass: ".popup__button",
@@ -42,7 +34,6 @@ export const profileTitle = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(".profile__description");
 export const profileImageContainer = document.querySelector(".profile__image-container");
 export const profileImage = document.querySelector(".profile__image");
-// export const editAvatarPopupFormAvatarUrlInput = document.querySelector(".popup__input-avatar");
 export const editPopup = document.querySelector("#edit-popup");
 export const editPopupCloseButton = editPopup.querySelector(".popup__close");
 export const editPopupForm = editPopup.querySelector("#edit-profile-form");
@@ -68,9 +59,9 @@ export const cardRender = (cards, isNewItem) => {
     const cardList = new Section({
         items: cards,
         renderer:  (card) => {
-            const cardInstance = new Card ({ title: card.name, link: card.link }, cardClassSetup);
+            const cardInstance = new Card (card, cardClassSetup);
             const cardElement = cardInstance.generateCard();
-    
+            
             cardList.addItem(cardElement, isNewItem);
         }
     }, ".cards__list");

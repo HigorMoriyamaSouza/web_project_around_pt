@@ -1,7 +1,6 @@
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import {
-    initialCards,
     profileImageContainer,
     profileEditButton,
     newCardButton,
@@ -9,18 +8,27 @@ import {
     newCardLink,
     cardClassSetup,
     cardRender,
+    api,
 } from "../utils/constants.js";
 
 /*
  * HANDLES EXISTENT CARDS CREATION
 */
-cardRender(initialCards, false);
+cardRender(await api.getCards(), false);
 
 /* 
  * HANDLES NEW CARDS ADDITION 
 */
-const newCardFormComponent = new PopupWithForm("#new-card-popup", (event) => {
+const newCardFormComponent = new PopupWithForm("#new-card-popup", async (event) => {
     event.preventDefault();
+
+    try{
+        const response = await api.newCard(newCardTitle.value, newCardLink.value);
+        console.log("Transaction succeded: ", response);
+    } catch (error) {
+        console.log("Error while saving card: ", error);
+    }
+    
     cardRender([{ name: newCardTitle.value, link: newCardLink.value }], true);
     newCardFormComponent.close();
 });
@@ -53,3 +61,5 @@ const profileEditAvatarFormComponent = new PopupWithForm("#edit-avatar-popup", (
 profileImageContainer.addEventListener("click", () => profileEditAvatarFormComponent.open());
 
 userInfo.fillUserPage();
+
+console.log(await api.getCards());

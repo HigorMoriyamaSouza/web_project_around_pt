@@ -7,6 +7,11 @@ export default class Api {
         * STORES USER ENDPOINT.
         */        
         this._userDataUrl = `${this._options.baseUrl}/users/me`;
+
+        /*
+        * STORES CARDS ENDPOINT.
+        */        
+       this._cardsDataUrl = `${this._options.baseUrl}/cards`;
     }
 
     /*
@@ -16,7 +21,6 @@ export default class Api {
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
-
         return await response.json();
     }
 
@@ -52,7 +56,55 @@ export default class Api {
 
         return this._handleResponseReturn(response);
     }
+    
+    /*
+     * HANDLES CARDS DATA.
+    */
+    async getCards() {
+        const response = await fetch(this._cardsDataUrl, { headers: this._headers });
+        return this._handleResponseReturn(response);
+    }
+
+    async newCard(cardTitle, cardLink) {
+        const response = await fetch(this._cardsDataUrl, {
+            method: "POST",
+            headers: this._headers,
+            body: JSON.stringify({
+                name: cardTitle,
+                link: cardLink
+            })
+        });
+        return this._handleResponseReturn(response);
+    }
+    
+    async deleteCard(cardId) {
+        const response = await fetch(`${this._cardsDataUrl}/${cardId}`, {
+            method: "DELETE",
+            headers: this._headers,
+        });
+
+        return this._handleResponseReturn(response);
+    }
+
+    async likeCard(cardId) {
+        const response = await fetch(`${this._cardsDataUrl}/${cardId}/likes`, {
+            method: "PUT",
+            headers: this._headers,
+        });
+
+        return this._handleResponseReturn(response);
+    }
+
+    async dislikeCard(cardId) {
+        const response = await fetch(`${this._cardsDataUrl}/${cardId}/likes`, {
+            method: "DELETE",
+            headers: this._headers,
+        });
+
+        return this._handleResponseReturn(response);
+    }
 }
+
 
 // const api = new Api({
 //   baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",

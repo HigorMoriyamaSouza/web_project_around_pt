@@ -19,6 +19,14 @@ export default class UserInfo {
     }
 
     getUserInfo() {
+        //Do this here
+        // try{
+        //     const response = await api.getCards();
+        //     console.log("Transaction succeded: ", response);
+        // } catch (error) {
+        //     console.log("Error while loading cards: ", error);
+        // }
+
         return api.getUserInfo();
     }
 
