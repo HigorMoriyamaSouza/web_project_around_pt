@@ -1,12 +1,20 @@
 # 🌎 Around The U.S.
 
-A responsive social-style web application built with Vanilla JavaScript, focused on DOM manipulation, component-based architecture, and interactive UI behavior.
+A responsive social-style web application built with **HTML5, CSS3, and Vanilla JavaScript**, focused on DOM manipulation, component-based architecture, API interaction, and clean user interface behavior.
 
-This project demonstrates core frontend engineering skills without relying on frameworks — emphasizing strong JavaScript fundamentals, clean structure, and responsive design principles.
+This project demonstrates core frontend engineering skills without relying on frameworks. The goal is to show strong JavaScript fundamentals, organized code structure, responsive design, and real-world UI patterns such as popups, form validation, loading states, and asynchronous API requests.
+
+---
 
 ## 🚀 Features
 
 ✅ Edit profile information dynamically
+
+✅ Update user avatar
+
+✅ Load user data from an external API
+
+✅ Load image cards from an external API
 
 ✅ Add custom image cards
 
@@ -14,11 +22,15 @@ This project demonstrates core frontend engineering skills without relying on fr
 
 ✅ Delete cards from the interface
 
+✅ Display loading feedback while forms are submitting
+
+✅ Open image preview modal
+
 ✅ Modal interactions:
 
 * Close with overlay click
 * Close with `ESC` key
-* Close with dedicated button
+* Close with dedicated close button
 
 ✅ Responsive layout for multiple screen sizes
 
@@ -30,35 +42,65 @@ This project demonstrates core frontend engineering skills without relying on fr
 
 ## 🧠 Technical Highlights
 
-This project was designed to reinforce important frontend concepts used in real-world applications:
+This project was built to reinforce important frontend concepts used in real-world applications.
 
 ### DOM Manipulation
 
 * Dynamic rendering of cards
 * Interactive UI updates without page reload
 * Event-driven behavior
+* User feedback during asynchronous operations
+
+### API Integration
+
+* Fetching user profile data from the server
+* Updating profile information through API requests
+* Updating the user avatar
+* Loading cards from the API
+* Creating new cards through the API
+* Handling likes, dislikes, and card deletion
+
+### Object-Oriented JavaScript
+
+The project uses ES6 classes to separate responsibilities and keep the code more maintainable.
+
+Examples of responsibilities include:
+
+* `Api` — handles server communication
+* `Card` — creates and manages individual cards
+* `FormValidator` — controls form validation behavior
+* `Popup` — manages base popup behavior
+* `PopupWithForm` — handles form-based popups
+* `PopupWithImage` — handles image preview popups
+* `Section` — renders groups of items
+* `UserInfo` — manages user profile information
 
 ### Component-Based Structure
 
-* Reusable UI sections
+* Reusable UI logic
+* Separation of responsibilities
+* Modular JavaScript files
 * Modular CSS organization using BEM methodology
 
 ### Modal Management
 
+* Encapsulated open/close logic
 * Overlay interaction handling
 * Keyboard accessibility with `Escape` support
-* Encapsulated open/close logic
+* Dedicated popup classes for different popup behaviors
 
 ### Responsive Design
 
-* Mobile-first adjustments
-* Flexible layouts using CSS media queries
+* Flexible layout for different screen sizes
+* CSS media queries
+* Mobile-friendly adjustments
 
-### Functional Thinking
+### User Experience Improvements
 
-* Separation of responsibilities
-* Reusable helper functions
-* State-driven UI interactions
+* Form validation before submission
+* Disabled/active button states
+* Loading button text such as `Saving...`
+* Immediate visual feedback after successful actions
 
 ---
 
@@ -66,11 +108,14 @@ This project was designed to reinforce important frontend concepts used in real-
 
 * HTML5
 * CSS3
-* JavaScript (ES6+)
+* JavaScript ES6+
+* ES Modules
+* Object-Oriented Programming
+* REST API integration
 * BEM Methodology
 * Normalize.css
 
-No frameworks or libraries — pure JavaScript.
+No frontend frameworks were used. This project was intentionally built with pure JavaScript to strengthen the fundamentals behind modern frontend development.
 
 ---
 
@@ -79,12 +124,16 @@ No frameworks or libraries — pure JavaScript.
 ```text
 web_project_around_pt/
 │
-├── blocks/              # Component CSS files
-├── images/              # Images and icons
-├── pages/               # Main page styles
-├── scripts/             # JavaScript logic
-├── vendor/              # External styles/fonts
-├── index.html           # Main HTML file
+├── src/
+│   ├── blocks/              # Component CSS files using BEM
+│   ├── components/          # JavaScript classes
+│   ├── images/              # Images and icons
+│   ├── pages/               # Main page styles
+│   ├── scripts/             # Main JavaScript entry point
+│   ├── utils/               # Constants and shared configuration
+│   └── vendor/              # External styles/fonts
+│
+├── index.html               # Main HTML file
 └── README.md
 ```
 
@@ -108,28 +157,38 @@ cd web_project_around_pt
 
 Open `index.html` in your browser.
 
-No build step required.
+No build step is required.
 
 ---
 
 ## 🎯 What This Project Demonstrates
 
-* Ability to build interactive web interfaces from scratch
-* Strong understanding of JavaScript fundamentals
-* Experience with DOM manipulation and event handling
-* Responsive frontend development skills
-* Writing modular and maintainable code
+This project demonstrates my ability to:
+
+* Build an interactive web interface from scratch
+* Work with Vanilla JavaScript and ES6 modules
+* Use object-oriented programming in frontend development
+* Communicate with an external API
+* Handle asynchronous operations with user feedback
+* Create reusable UI components
+* Validate forms on the client side
+* Manage popup behavior and event handling
+* Structure CSS using BEM methodology
+* Build responsive layouts for different devices
 
 ---
 
-## 📌 Future Improvements
+## 📌 Current Improvement Opportunities
 
-* Persist cards using LocalStorage
-* Add backend/API integration
-* Improve accessibility features
-* Add animations and transitions
-* Implement image preview modal
-* Refactor into a framework like React
+This project is functional, but there are still areas that can be improved as part of continued development:
+
+* Improve error messages shown directly to the user
+* Refactor delete confirmation into a dedicated confirmation popup class
+* Review event listener management for long-term maintainability
+* Improve accessibility attributes for modals and form errors
+* Add smoother animations and transitions
+* Add automated tests for key components
+* Improve environment/config handling for API credentials
 
 ---
 
@@ -142,4 +201,6 @@ Software Engineer | Full Stack Developer
 
 ## 💡 Final Note
 
-This project focuses on mastering the fundamentals behind modern frontend frameworks — demonstrating the ability to create scalable, interactive interfaces using only core web technologies.
+Around The U.S. is a frontend project focused on mastering the fundamentals behind modern web applications. It shows how interactive, API-driven interfaces can be built with clean structure, reusable JavaScript classes, responsive design, and no frontend framework dependency.
+
+The project is still evolving, but it already represents important real-world frontend skills: component thinking, API communication, DOM control, validation, and user-focused interaction design. 🚀
